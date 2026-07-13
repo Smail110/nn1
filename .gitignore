@@ -1,50 +1,56 @@
-# Python cache
+# Python / notebooks
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 
-# Logs and local run reports
+# Логи и служебные артефакты запусков
 logs/
 artifacts/
 archives/
 
-# Competition data: place locally before running, do not commit by default
+# Исходные данные соревнования кладутся локально перед запуском.
+# В GitHub их обычно не коммитим из-за размера и правил соревнований.
 train.csv
 test.csv
 sample_submition.csv
 
-# Generated submissions and intermediate CSV artifacts
+# Промежуточные CSV/JSON создаются pipeline в корне проекта.
 submission*.csv
 local_valid*.csv
 test_*.csv
 kaggle_*debug*.csv
+*_results.json
 *_results_debug.csv
 
-# Large embeddings / numpy caches
+# Но финальные curated-версии для отчёта храним в отдельных папках.
+!submissions/
+!submissions/*.csv
+!reports/
+!reports/*.json
+
+# Большие embedding/cache файлы
 *.npy
 *.npz
 
-# Trained model directories
+# Обученные модели и AutoGluon-папки
 rubert_salary*/
 rubert_large_salary*/
 bert_inference_tmp/
 autogluon*/
 
-# Local pretrained model directories or junctions
+# Локальные pretrained-модели или junction-папки.
+# Они нужны для запуска, но в GitHub не загружаются.
 rubert_large_base/
 ruroberta_large_base/
 xlm_roberta_large_base/
 
-# Keep small useful files explicitly visible if Git client supports negation
+# Основные файлы проекта остаются видимыми.
 !README.md
+!FILES_TO_SUBMIT.txt
 !requirements.txt
 !TETA_NN1_FINAL_HOMEWORK.ipynb
 !run_all.py
-!stages.py
-!pipeline_utils.py
-!config.py
-!stage_scripts/
-!stage_scripts/*.py
-!custom_pytorch_holdout_results.json
-!candidate_reranker_results.json
-!oof_candidate_reranker_086_results.json
+!pipeline/
+!pipeline/**/*.py
+!tools/
+!tools/*.py

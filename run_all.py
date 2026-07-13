@@ -1,10 +1,13 @@
-"""Главный запуск полного salary prediction pipeline.
+"""Главная точка запуска полного salary prediction pipeline.
 
-Пример полного запуска:
+Быстрые команды:
 
-    python leaderboard_087_full_pipeline/run_all.py --from-scratch --stream
+    python run_all.py --list
+    python run_all.py --resume --start-at final_candidate_reranker
 
-В режиме `--from-scratch` выбранные стадии запускаются заново.
+Полный пересчёт с тяжёлыми нейросетевыми этапами:
+
+    python run_all.py --from-scratch --include-heavy --stream
 """
 
 from __future__ import annotations
@@ -14,30 +17,29 @@ import os
 import subprocess
 import sys
 import time
-from pathlib import Path
 
-from config import LOG_DIR, ROOT
-from pipeline_utils import ensure_dirs, missing, read_tail, rel, validate_final_submission
-from stages import STAGES, Stage
+from pipeline.config import LOG_DIR, ROOT
+from pipeline.pipeline_utils import ensure_dirs, missing, read_tail, rel, validate_final_submission
+from pipeline.stages import STAGES, Stage
 
 
-# Чтобы русские сообщения нормально отображались в логах и терминале Windows.
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def stage_index(name: str) -> int:
-    """Находит стадию по полному имени или префиксу."""
+    """Находит этап по полному имени или по префиксу."""
 
     for index, stage in enumerate(STAGES):
         if stage.name == name or stage.name.startswith(name):
             return index
-    raise SystemExit(f"Неизвестная стадия: {name}")
+    known = ", ".join(stage.name for stage in STAGES)
+    raise SystemExit(f"Неизвестный этап: {name}\nДоступные этапы: {known}")
 
 
 def run_stage(stage: Stage, *, rerun: bool, stream: bool, dry_run: bool) -> None:
-    """Запускает одну стадию и проверяет её outputs."""
+    """Запускает один этап и проверяет его ожидаемые outputs."""
 
     if stage.is_done() and not rerun:
         print(f"[SKIP] {stage.name}: outputs already exist", flush=True)
@@ -46,11 +48,11 @@ def run_stage(stage: Stage, *, rerun: bool, stream: bool, dry_run: bool) -> None
     missing_inputs = missing(stage.input_paths())
     if missing_inputs:
         label = "[WOULD-BLOCK]" if dry_run else "[BLOCKED]"
-        print(f"{label} {stage.name}: не хватает входов")
+        print(f"{label} {stage.name}: не хватает входных файлов")
         for path in missing_inputs:
             print("  -", rel(path))
         if dry_run:
-            print("  dry-run продолжается: в реальном полном прогоне эти файлы создадут предыдущие стадии.")
+            print("  dry-run продолжается: в полном прогоне эти файлы создают предыдущие этапы.")
         else:
             raise SystemExit(2)
 
@@ -100,15 +102,15 @@ def parse_args() -> argparse.Namespace:
         description="Полный запуск pipeline для прогноза зарплаты.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("--list", action="store_true", help="Показать стадии и выйти")
-    parser.add_argument("--resume", action="store_true", help="Пропускать готовые стадии")
-    parser.add_argument("--rerun", action="store_true", help="Перезапускать стадии даже при готовых outputs")
-    parser.add_argument("--from-scratch", action="store_true", help="Пересчитать выбранные стадии с включёнными тяжёлыми этапами")
-    parser.add_argument("--include-heavy", action="store_true", help="Разрешить тяжёлые AutoGluon/BERT/Transformer стадии")
-    parser.add_argument("--stream", action="store_true", help="Показывать output стадий в консоли")
+    parser.add_argument("--list", action="store_true", help="Показать этапы и выйти")
+    parser.add_argument("--resume", action="store_true", help="Пропускать уже готовые этапы")
+    parser.add_argument("--rerun", action="store_true", help="Перезапускать этапы даже при готовых outputs")
+    parser.add_argument("--from-scratch", action="store_true", help="Пересчитать выбранные этапы заново")
+    parser.add_argument("--include-heavy", action="store_true", help="Разрешить тяжёлые AutoGluon/BERT/Transformer этапы")
+    parser.add_argument("--stream", action="store_true", help="Показывать output этапов в консоли")
     parser.add_argument("--dry-run", action="store_true", help="Показать план без запуска")
-    parser.add_argument("--start-at", default=None, help="Начать со стадии по имени/префиксу")
-    parser.add_argument("--stop-after", default=None, help="Остановиться после стадии по имени/префиксу")
+    parser.add_argument("--start-at", default=None, help="Начать с этапа по имени/префиксу")
+    parser.add_argument("--stop-after", default=None, help="Остановиться после этапа по имени/префиксу")
     return parser.parse_args()
 
 
@@ -120,7 +122,7 @@ def main() -> None:
         args.rerun = True
         args.include_heavy = True
     if args.rerun and args.resume:
-        raise SystemExit("Нельзя одновременно --resume и --rerun")
+        raise SystemExit("Нельзя одновременно использовать --resume и --rerun")
     if not args.rerun:
         args.resume = True
 
@@ -146,8 +148,8 @@ def main() -> None:
     for stage in selected:
         if stage.heavy and not args.include_heavy and not stage.is_done() and not args.dry_run:
             print(f"[HEAVY-BLOCKED] {stage.name}")
-            print("  Это тяжёлая стадия, а outputs отсутствуют.")
-            print("  Запусти с --include-heavy или --from-scratch, если точно хочешь обучать.")
+            print("  Это тяжёлая стадия, а её outputs отсутствуют.")
+            print("  Запусти с --include-heavy или --from-scratch, если точно хочешь обучать её заново.")
             raise SystemExit(4)
         run_stage(stage, rerun=args.rerun, stream=args.stream, dry_run=args.dry_run)
 

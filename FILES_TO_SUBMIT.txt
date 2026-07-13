@@ -1,34 +1,49 @@
-Для сдачи использовать папку:
+Для сдачи использовать репозиторий/папку:
+
   leaderboard_087_full_pipeline
 
 Автор:
+
   Роев Герман Александрович
 
 Kaggle nickname:
+
   Smail110
 
 Score:
+
   Public  0.814473
   Private 0.826875
 
 Главный ноутбук:
+
   TETA_NN1_FINAL_HOMEWORK.ipynb
 
-Основные файлы кода:
+Основной запуск:
+
+  python -u run_all.py --from-scratch --include-heavy --stream
+
+Быстрая проверка финальной сборки:
+
+  python -u run_all.py --rerun --start-at final_candidate_reranker --stream
+
+Финальный Kaggle submission:
+
+  submissions/submission.csv
+
+Код решения:
+
   run_all.py
-  stages.py
-  pipeline_utils.py
-  config.py
-  stage_scripts/
+  pipeline/
+  tools/
   requirements.txt
   README.md
 
-Файл для Kaggle после полного запуска:
-  submission.csv
-
 Перед финальной сдачей вручную добавить:
+
   - итоговую позицию на leaderboard;
-  - screenshot leaderboard в notebook / файл leaderboard_final.png.
+  - screenshot leaderboard в notebook или файл leaderboard_final.png.
 
 В GitHub не загружать тяжёлые артефакты:
-  logs/, artifacts/, *.npy, обученные модели, AutoGluon-папки.
+
+  logs/, artifacts/, *.npy, обученные модели, AutoGluon-папки, исходные train/test CSV.

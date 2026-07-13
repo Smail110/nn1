@@ -1,76 +1,120 @@
-# TETA NN1 2026 — полный pipeline решения
+# TETA NN1 2026 — прогноз зарплаты по вакансии
 
-Автор: Роев Герман Александрович  
-Kaggle nickname: `Smail110`
+Автор: **Роев Герман Александрович**  
+Kaggle nickname: **Smail110**
 
-Итоговый результат выбранного сабмита:
+Итоговый результат выбранного решения:
 
-- Public: `0.814473`
-- Private: `0.826875`
+- Public leaderboard: **0.814473**
+- Private leaderboard: **0.826875**
 
-Эта папка содержит код и ноутбук для воспроизведения решения соревнования `teta-nn-1-2026`.
+Репозиторий содержит полный код воспроизведения решения для соревнования
+`teta-nn-1-2026`: от подготовки признаков и обучения моделей до финального
+`submission.csv`.
 
-## Главные файлы
+## Структура проекта
 
-- `TETA_NN1_FINAL_HOMEWORK.ipynb` — итоговый ноутбук для сдачи ДЗ с сохранёнными outputs.
-- `run_all.py` — основной orchestrator полного pipeline.
-- `stages.py` — список этапов обучения и финальной сборки.
-- `pipeline_utils.py`, `config.py` — общие утилиты и пути.
-- `stage_scripts/` — отдельные stage-обёртки и финальный сборщик submission.
-- `requirements.txt` — зависимости.
-- `submission.csv` — финальный файл для загрузки на Kaggle, создаётся pipeline.
+```text
+.
+├── TETA_NN1_FINAL_HOMEWORK.ipynb   # ноутбук для сдачи ДЗ с сохранёнными output-ами
+├── run_all.py                      # главный запуск pipeline
+├── pipeline/
+│   ├── stages.py                   # реестр этапов
+│   ├── config.py                   # пути и настройки
+│   ├── pipeline_utils.py           # запуск этапов и проверки
+│   ├── stage_scripts/              # лёгкие wrapper-ы этапов
+│   └── steps/                      # основная ML-логика этапов
+├── reports/                        # сохранённые JSON-отчёты метрик
+├── submissions/                    # финальные CSV для Kaggle
+├── tools/                          # вспомогательные утилиты
+├── requirements.txt
+└── FILES_TO_SUBMIT.txt
+```
 
-## Как запустить с нуля локально
+Корень специально оставлен спокойным: тяжёлые модели, логи, промежуточные CSV,
+embedding-кэши и AutoGluon-директории создаются локально и не коммитятся.
 
-Из этой папки:
+## Быстрая проверка работоспособности
+
+Если промежуточные prediction-файлы уже лежат в папке проекта, можно быстро
+пересобрать финальный submission без переобучения BERT/AutoGluon:
 
 ```powershell
 cd D:\PythonProject1\leaderboard_087_full_pipeline
-..\.venv\Scripts\python.exe -u run_all.py --from-scratch --include-heavy
+..\.venv\Scripts\python.exe -u run_all.py --rerun --start-at final_candidate_reranker --stream
 ```
 
-Быстрый resume без пересчёта готовых этапов:
+Проверенный smoke-test пересобирает:
 
-```powershell
-..\.venv\Scripts\python.exe -u run_all.py --resume
-```
-
-После успешного полного запуска создаются:
-
-- `submission.csv`
 - `submission_candidate_reranker.csv`
-- `candidate_reranker_results.json`
+- `submission.csv`
+- `submission_final_for_upload.csv`
 
-## Какие данные использует решение
+и дополнительно копирует финальные CSV в папку `submissions/`.
 
-Pipeline использует только:
+## Полный запуск с нуля
 
-- `train.csv`
-- `test.csv`
-- `sample_submition.csv`
-- открытые pretrained-модели RuBERT / RuRoBERTa / XLM-RoBERTa как основу для fine-tuning.
-
-Старые Kaggle-сабмиты и ответы leaderboard не используются как входные данные.
-
-## Важное для GitHub
-
-В репозиторий лучше загружать код, ноутбук, README и небольшие JSON-отчёты.  
-Не нужно коммитить большие обученные модели, `.npy` embeddings, AutoGluon-папки, логи и CSV-артефакты полного прогона — они создаются локально при запуске.
-
-Если проверяющий запускает проект на другой машине, нужно положить рядом исходные CSV соревнования и доступные pretrained-модели:
+Перед полным запуском в папке проекта должны лежать исходные файлы соревнования:
 
 - `train.csv`
 - `test.csv`
 - `sample_submition.csv`
+
+Также нужны открытые pretrained-модели/кэши для transformer-этапов:
+
 - `rubert_large_base/`
 - `ruroberta_large_base/`
 - `xlm_roberta_large_base/`
+- Hugging Face cache для `DeepPavlov/rubert-base-cased`
 
-## Что осталось сделать вручную перед сдачей
+Команда полного запуска:
 
-В ноутбуке уже внесены ФИО, ник и scores. Остаётся:
+```powershell
+cd D:\PythonProject1\leaderboard_087_full_pipeline
+..\.venv\Scripts\python.exe -u run_all.py --from-scratch --include-heavy --stream
+```
 
-1. вписать итоговую позицию на leaderboard после финального freeze;
-2. добавить screenshot leaderboard в файл `leaderboard_final.png`;
-3. убедиться, что screenshot отображается в ноутбуке;
-4. загрузить notebook/репозиторий и отправить открытую ссылку.
+Полный прогон долгий: он заново обучает AutoGluon, RuBERT, RuRoBERTa,
+XLM-RoBERTa, TF-IDF/target-encoding модели и финальный reranker.
+
+## Что использует решение
+
+Pipeline использует только:
+
+- `train.csv`;
+- `test.csv`;
+- `sample_submition.csv`;
+- открытые pretrained language models как базу для fine-tuning.
+
+Старые Kaggle submissions, leaderboard-ответы и внешняя разметка не используются
+как входные данные.
+
+## Кратко по модели
+
+В решении собраны несколько групп сигналов:
+
+- самописная PyTorch-модель `SalaryResidualMLP` для обязательной части ДЗ;
+- TF-IDF + target encoding baseline;
+- regex/ML обработка явных зарплатных упоминаний в тексте;
+- несколько fine-tuned transformer-моделей: RuBERT, RuRoBERTa, XLM-RoBERTa;
+- финальный Ridge/LightGBM/CatBoost stack и salary-candidate reranker.
+
+Локальная метрика финального reranker:
+
+- Ridge stack до reranking: `R2 = 0.795469`
+- итоговый selected OOF: `R2 = 0.807635`
+
+Финальный Kaggle-файл для загрузки лежит в:
+
+```text
+submissions/submission.csv
+```
+
+## Что добавить вручную перед финальной сдачей
+
+В ноутбуке уже указаны ФИО, ник Kaggle и public/private score. После финального
+freeze leaderboard нужно вручную:
+
+1. вписать итоговую позицию;
+2. добавить screenshot leaderboard, например `leaderboard_final.png`;
+3. убедиться, что output ячеек в `.ipynb` не очищен.
