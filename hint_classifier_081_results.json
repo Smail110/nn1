@@ -1,0 +1,98 @@
+{
+  "base_local_r2": 0.7830109743511705,
+  "hint_classifier_auc": 0.908450704225352,
+  "hint_corrected_local_r2": 0.788146910440914,
+  "company_corrected_local_r2": 0.7909616597853044,
+  "calibrated_local_r2": 0.7909633146969344,
+  "final_local_r2": 0.7909633146969344,
+  "threshold": 0.39999999999999997,
+  "high_confidence_hint_weight": 0.8500000000000001,
+  "other_hint_weight": 0.37500000000000006,
+  "calibration": [
+    1.0012019243070203,
+    -0.00588337846961041
+  ],
+  "company_smoothing": 3,
+  "company_correction_weight": 0.9,
+  "snap_minimum_count": 0,
+  "snap_weight": 0.0,
+  "valid_hint_rows": 491,
+  "selected_valid_rows": 338,
+  "selected_valid_precision": 0.7958579881656804,
+  "test_hint_rows": 816,
+  "selected_test_rows": 567,
+  "prediction_mean": 3.5487807363120245,
+  "prediction_std": 0.6674907895475514,
+  "top_trials": [
+    {
+      "r2": 0.788146910440914,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.8500000000000001,
+      "other_weight": 0.37500000000000006,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881459673628924,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.8500000000000001,
+      "other_weight": 0.4,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881449365332213,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.875,
+      "other_weight": 0.37500000000000006,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881439934551999,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.875,
+      "other_weight": 0.4,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881422037298433,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.825,
+      "other_weight": 0.37500000000000006,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881412606518219,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.825,
+      "other_weight": 0.4,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881375016276232,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.8500000000000001,
+      "other_weight": 0.35000000000000003,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881362820067654,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.9,
+      "other_weight": 0.37500000000000006,
+      "rows": 338
+    },
+    {
+      "r2": 0.7881355277199306,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.875,
+      "other_weight": 0.35000000000000003,
+      "rows": 338
+    },
+    {
+      "r2": 0.788135338928744,
+      "threshold": 0.39999999999999997,
+      "high_weight": 0.9,
+      "other_weight": 0.4,
+      "rows": 338
+    }
+  ]
+}

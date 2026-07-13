@@ -1,0 +1,13 @@
+{
+  "standalone_local_r2": 0.7432595261786061,
+  "ensemble_local_r2": 0.7944558270656742,
+  "ensemble_weight": 0.195,
+  "calibration": [
+    0.9933692107736677,
+    0.030007161616339526
+  ],
+  "best_epoch": 3,
+  "best_checkpoint": null,
+  "target_mean": 4.516659348185463,
+  "target_std": 0.6287317839515366
+}

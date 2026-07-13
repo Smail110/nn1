@@ -1,0 +1,8 @@
+{
+  "train_candidates": 63933,
+  "train_positive_candidates": 2628,
+  "test_candidates": 21480,
+  "test_rows_with_candidates": 4798,
+  "probability_mean": 0.039510747560234614,
+  "probability_max": 0.9760444697909868
+}

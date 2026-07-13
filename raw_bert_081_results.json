@@ -1,0 +1,80 @@
+{
+  "local_r2": 0.7797526450187087,
+  "bert_aggregation": "bert_max",
+  "bert_weight": 0.35,
+  "salary_hint_weight": 0.30000000000000004,
+  "base_calibration": [
+    0.9935276442243598,
+    -0.00021897272903252004
+  ],
+  "final_calibration": [
+    1.0048034670752186,
+    -0.021575043647385717
+  ],
+  "salary_valid_rows": 411,
+  "salary_test_rows": 687,
+  "prediction_mean": 4.517620884273576,
+  "prediction_std": 0.5650082481685302,
+  "top_trials": [
+    {
+      "r2": 0.7797526450187087,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.35,
+      "salary_hint_weight": 0.30000000000000004
+    },
+    {
+      "r2": 0.7797513274603611,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.355,
+      "salary_hint_weight": 0.30000000000000004
+    },
+    {
+      "r2": 0.7797502801293199,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.345,
+      "salary_hint_weight": 0.30000000000000004
+    },
+    {
+      "r2": 0.7797463407314253,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.36,
+      "salary_hint_weight": 0.30000000000000004
+    },
+    {
+      "r2": 0.779744219577924,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.33999999999999997,
+      "salary_hint_weight": 0.30000000000000004
+    },
+    {
+      "r2": 0.7797441257740507,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.355,
+      "salary_hint_weight": 0.325
+    },
+    {
+      "r2": 0.7797437888070504,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.35,
+      "salary_hint_weight": 0.325
+    },
+    {
+      "r2": 0.7797408168664477,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.36,
+      "salary_hint_weight": 0.325
+    },
+    {
+      "r2": 0.7797397927704187,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.345,
+      "salary_hint_weight": 0.325
+    },
+    {
+      "r2": 0.7797386799500321,
+      "bert_aggregation": "bert_max",
+      "bert_weight": 0.35,
+      "salary_hint_weight": 0.275
+    }
+  ]
+}

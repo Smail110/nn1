@@ -1,0 +1,50 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Logs and local run reports
+logs/
+artifacts/
+archives/
+
+# Competition data: place locally before running, do not commit by default
+train.csv
+test.csv
+sample_submition.csv
+
+# Generated submissions and intermediate CSV artifacts
+submission*.csv
+local_valid*.csv
+test_*.csv
+kaggle_*debug*.csv
+*_results_debug.csv
+
+# Large embeddings / numpy caches
+*.npy
+*.npz
+
+# Trained model directories
+rubert_salary*/
+rubert_large_salary*/
+bert_inference_tmp/
+autogluon*/
+
+# Local pretrained model directories or junctions
+rubert_large_base/
+ruroberta_large_base/
+xlm_roberta_large_base/
+
+# Keep small useful files explicitly visible if Git client supports negation
+!README.md
+!requirements.txt
+!TETA_NN1_FINAL_HOMEWORK.ipynb
+!run_all.py
+!stages.py
+!pipeline_utils.py
+!config.py
+!stage_scripts/
+!stage_scripts/*.py
+!custom_pytorch_holdout_results.json
+!candidate_reranker_results.json
+!oof_candidate_reranker_086_results.json

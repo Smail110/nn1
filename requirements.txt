@@ -1,0 +1,15 @@
+# Минимальные библиотеки, которые нужны stage-скриптам полного pipeline.
+# Версии специально не зажаты жёстко: на Kaggle/локальной машине часто уже есть
+# совместимый стек, а heavy-стадии с PyTorch обычно зависят от конкретной CUDA.
+
+numpy
+pandas
+scipy
+scikit-learn
+catboost
+lightgbm
+torch
+transformers
+accelerate
+huggingface_hub
+autogluon.tabular

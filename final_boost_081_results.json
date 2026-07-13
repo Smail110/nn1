@@ -1,0 +1,20 @@
+{
+  "classifier_local_r2": 0.788146910440914,
+  "company_local_r2": 0.7912027052567463,
+  "location_local_r2": 0.7914574594693479,
+  "calibrated_local_r2": 0.7914851145468716,
+  "final_local_r2": 0.7914851145468716,
+  "company_smoothing": 2,
+  "company_weight": 0.75,
+  "location_smoothing": 200,
+  "location_weight": 0.9750000000000001,
+  "calibration": [
+    1.0056391137518015,
+    -0.024405455535767274
+  ],
+  "snap_minimum_count": 0,
+  "snap_weight": 0.0,
+  "selected_test_hints": 567,
+  "prediction_mean": 3.5446070355847095,
+  "prediction_std": 0.6686693698106668
+}

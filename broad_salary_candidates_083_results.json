@@ -1,0 +1,44 @@
+{
+  "best": {
+    "alpha": 1e-05,
+    "candidate_auc": 0.9245726073183121,
+    "local_r2": 0.7925104118322265,
+    "threshold": 0.06,
+    "weight": 0.22,
+    "selected_rows": 245
+  },
+  "all": [
+    {
+      "alpha": 1e-05,
+      "candidate_auc": 0.9245726073183121,
+      "local_r2": 0.7925104118322265,
+      "threshold": 0.06,
+      "weight": 0.22,
+      "selected_rows": 245
+    },
+    {
+      "alpha": 3e-05,
+      "candidate_auc": 0.8769147851307283,
+      "local_r2": 0.7917140451128937,
+      "threshold": 0.24999999999999994,
+      "weight": 0.66,
+      "selected_rows": 17
+    },
+    {
+      "alpha": 0.0001,
+      "candidate_auc": 0.8535631889756148,
+      "local_r2": 0.7914891666379626,
+      "threshold": 0.26999999999999996,
+      "weight": 0.18,
+      "selected_rows": 5
+    },
+    {
+      "alpha": 0.0003,
+      "candidate_auc": 0.8345453487966312,
+      "local_r2": 0.7914860183321664,
+      "threshold": 0.3,
+      "weight": 0.1,
+      "selected_rows": 1
+    }
+  ]
+}
